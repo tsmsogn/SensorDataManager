@@ -1,9 +1,5 @@
 package com.ubhave.datahandler.loggertypes;
 
-import java.util.ArrayList;
-
-import org.json.JSONObject;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -18,6 +14,10 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.log.InteractionData;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public abstract class AbstractDataLogger
 {
@@ -200,7 +200,11 @@ public abstract class AbstractDataLogger
 					}
 					catch (DataHandlerException e)
 					{
-						e.printStackTrace();
+						if (DataHandlerConfig.shouldLog())
+						{
+							Log.d(LOG_TAG, ""+e.getLocalizedMessage());
+							e.printStackTrace();
+						}
 					}
 				}
 			}.start();
