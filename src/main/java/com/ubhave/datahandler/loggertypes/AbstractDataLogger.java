@@ -215,6 +215,70 @@ public abstract class AbstractDataLogger
 		}
 	}
 
+	public final void logSensorData(final SensorData data, final DataStoreCallback callback)
+	{
+		if (data != null)
+		{
+			new Thread()
+			{
+				@Override
+				public void run()
+				{
+					try
+					{
+						dataManager.logSensorData(data);
+						callback.onDataStored();
+					}
+					catch (DataHandlerException e)
+					{
+						if (DataHandlerConfig.shouldLog())
+						{
+							Log.d(LOG_TAG, ""+e.getLocalizedMessage());
+							e.printStackTrace();
+						}
+						callback.onDataStoreFailed();
+					}
+				}
+			}.start();
+		}
+		else if (DataHandlerConfig.shouldLog())
+		{
+			Log.d(LOG_TAG, "Failed logSensorData: null data");
+		}
+	}
+
+	public final void logSensorData(final SensorData data, final JSONFormatter formatter, final DataStoreCallback callback)
+	{
+		if (data != null && formatter != null)
+		{
+			new Thread()
+			{
+				@Override
+				public void run()
+				{
+					try
+					{
+						dataManager.logSensorData(data, formatter);
+						callback.onDataStored();
+					}
+					catch (DataHandlerException e)
+					{
+						if (DataHandlerConfig.shouldLog())
+						{
+							Log.d(LOG_TAG, ""+e.getLocalizedMessage());
+							e.printStackTrace();
+						}
+						callback.onDataStoreFailed();
+					}
+				}
+			}.start();
+		}
+		else if (DataHandlerConfig.shouldLog())
+		{
+			Log.d(LOG_TAG, "Failed logSensorData: null data or formatter");
+		}
+	}
+
 	public final void logInteraction(final InteractionData interaction)
 	{
 		logSensorData(interaction);
