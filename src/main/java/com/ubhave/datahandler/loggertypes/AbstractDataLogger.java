@@ -18,7 +18,6 @@ import com.ubhave.sensormanager.data.log.InteractionData;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractDataLogger
 {
@@ -317,22 +316,5 @@ public abstract class AbstractDataLogger
 		{
 			Log.d(LOG_TAG, "Failed logExtra: null arg");
 		}
-	}
-
-	public List<SensorData> getRecentSensorData(final int sensorId, final long startTimestamp)
-	{
-		List<SensorData> recentData = new ArrayList<SensorData>();
-		try
-		{
-			recentData = dataManager.getRecentSensorData(sensorId, startTimestamp);
-		}
-		catch (Exception e)
-		{
-			if (DataHandlerConfig.shouldLog())
-			{
-				Log.d(LOG_TAG, ""+e.getLocalizedMessage());
-			}
-		}
-		return recentData;
 	}
 }
