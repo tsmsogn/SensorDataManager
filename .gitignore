@@ -1,10 +1,8 @@
-bin/*
-
+*.iml
+.gradle
+/local.properties
+.idea
 .DS_Store
-
-gen/*
-
-build/*
-
-.settings/
-
+/build
+/captures
+.externalNativeBuild
